@@ -13,13 +13,28 @@
     .logo-img{width:280px;max-width:80vw;margin-bottom:1.5rem;filter:brightness(0) invert(1);display:block}
     .message{font-size:22px;font-weight:500;color:white;letter-spacing:-.2px;margin-bottom:2rem;text-align:center}
     .game-section{display:flex;flex-direction:column;align-items:center;width:100%}
-    .score-label{font-size:12px;color:rgba(255,255,255,.7);font-family:monospace;letter-spacing:.06em;margin-bottom:6px;align-self:flex-start;margin-left:calc(50% - 300px)}
-    iframe{display:block;width:600px;max-width:90vw;height:160px;border:none;border-radius:4px}
-    .hint{color:rgba(255,255,255,.55);font-size:11px;margin-top:8px;letter-spacing:.04em;text-align:center;font-family:monospace}
-    .dead-options{display:none;flex-direction:column;align-items:center;gap:10px;margin-top:14px}
-    .dead-options.show{display:flex}
-    .btn-game{background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.3);border-radius:99px;padding:9px 22px;font-size:13px;color:white;cursor:pointer;font-family:monospace;letter-spacing:.04em}
-    .btn-game:hover{background:rgba(255,255,255,.22)}
+    .pc-wrap{display:flex;flex-direction:column;align-items:center;width:100%}
+    .score-label{font-size:12px;color:rgba(255,255,255,.7);font-family:monospace;letter-spacing:.06em;margin-bottom:6px;text-align:center}
+    .pc-wrap iframe{display:block;width:600px;max-width:90vw;height:180px;border:none;border-radius:4px}
+    .pc-hint{color:rgba(255,255,255,.55);font-size:11px;margin-top:8px;letter-spacing:.04em;text-align:center;font-family:monospace}
+    .console-wrap{display:none;flex-direction:column;align-items:center}
+    .screen-wrap{background:#1a1a1a;border-radius:16px 16px 0 0;padding:12px 12px 0;width:320px;max-width:92vw}
+    .screen-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .brand{color:#EE2934;font-size:10px;letter-spacing:.1em;font-family:monospace}
+    .led{width:6px;height:6px;border-radius:50%;background:#00ff00;box-shadow:0 0 4px #00ff00}
+    .screen-wrap iframe{display:block;width:100%;height:130px;border:none;border-radius:4px}
+    .console-body{background:#1a1a1a;border-radius:0 0 24px 24px;padding:14px 20px;width:320px;max-width:92vw;display:flex;justify-content:center;gap:16px}
+    .ctrl-btn{width:80px;height:56px;border-radius:8px;border:none;cursor:pointer;font-size:22px;color:white;font-family:monospace;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;justify-content:center}
+    .ctrl-btn:active{transform:translateY(3px)}
+    .ctrl-up{background:#c0392b;box-shadow:inset 0 -4px 0 #7b1a10}
+    .ctrl-up:active{box-shadow:inset 0 0px 0 #7b1a10}
+    .ctrl-down{background:#2471a3;box-shadow:inset 0 -4px 0 #154360}
+    .ctrl-down:active{box-shadow:inset 0 0px 0 #154360}
+    .console-hint{color:rgba(255,255,255,.3);font-size:9px;letter-spacing:.08em;font-family:monospace;text-align:center;margin-top:8px}
+    @media(max-width:640px){
+      .pc-wrap{display:none}
+      .console-wrap{display:flex}
+    }
     .bottom-section{margin-top:3rem;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,.15);width:100%;max-width:600px}
     .sub{font-size:16px;color:rgba(255,255,255,.75);margin-bottom:.4rem}
     .mientras{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:1rem}
@@ -35,9 +50,27 @@
     <div class="message">Estamos cosechando.</div>
 
     <div class="game-section">
-      <div style="font-size:12px;color:rgba(255,255,255,.7);font-family:monospace;letter-spacing:.06em;margin-bottom:6px;text-align:center">RASTROJO RUNNER</div>
-      <iframe src="game.html" scrolling="no" allowtransparency="true"></iframe>
-<div class="hint">FLECHAS ↑↓ · SWIPE en móvil · TAP para empezar</div>    </div>
+      <div class="pc-wrap">
+        <div class="score-label">RASTROJO RUNNER</div>
+        <iframe id="game-pc" src="game.html" scrolling="no"></iframe>
+        <div class="pc-hint">FLECHAS ↑↓ para cambiar de carril</div>
+      </div>
+
+      <div class="console-wrap">
+        <div class="screen-wrap">
+          <div class="screen-top">
+            <span class="brand">OLABEAGA LAB</span>
+            <div class="led"></div>
+          </div>
+          <iframe id="game-mobile" src="game.html" scrolling="no"></iframe>
+        </div>
+        <div class="console-body">
+          <button class="ctrl-btn ctrl-up" id="btn-up">▲</button>
+          <button class="ctrl-btn ctrl-down" id="btn-down">▼</button>
+        </div>
+        <div class="console-hint">RASTROJO RUNNER · TAP en pantalla para empezar</div>
+      </div>
+    </div>
 
     <div class="bottom-section" id="bottom">
       <div class="sub">Pronto aquí.</div>
@@ -49,5 +82,38 @@
       <div class="footer">© 2026 Olabeaga Lab</div>
     </div>
   </div>
+
+  <script>
+    function sendToGame(cmd){
+      ['game-pc','game-mobile'].forEach(id=>{
+        const f=document.getElementById(id);
+        if(f) f.contentWindow.postMessage(cmd,'*');
+      });
+    }
+
+    document.getElementById('btn-up').addEventListener('click',function(e){
+      e.preventDefault();
+      sendToGame('up');
+    });
+    document.getElementById('btn-down').addEventListener('click',function(e){
+      e.preventDefault();
+      sendToGame('down');
+    });
+
+    document.getElementById('btn-up').addEventListener('touchstart',function(e){
+      e.preventDefault();
+      sendToGame('up');
+    },{passive:false});
+
+    document.getElementById('btn-down').addEventListener('touchstart',function(e){
+      e.preventDefault();
+      sendToGame('down');
+    },{passive:false});
+
+    document.addEventListener('keydown',function(e){
+      if(e.key==='ArrowUp'){e.preventDefault();sendToGame('up');}
+      else if(e.key==='ArrowDown'){e.preventDefault();sendToGame('down');}
+    });
+  </script>
 </body>
 </html>
