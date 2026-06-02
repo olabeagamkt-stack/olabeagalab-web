@@ -169,24 +169,6 @@ function checkCollision(){
   return false;
 }
 
-let touchStartY=0;
-
-canvas.addEventListener('touchstart',function(e){
-  e.preventDefault();
-  touchStartY=e.touches[0].clientY;
-  if(state==='idle'){state='playing';}
-  else if(state==='dead'){resetGame();}
-},{passive:false});
-
-canvas.addEventListener('touchend',function(e){
-  e.preventDefault();
-  const dy=e.changedTouches[0].clientY-touchStartY;
-  if(Math.abs(dy)>20){
-    if(dy<0) switchLane(-1);
-    else switchLane(1);
-  }
-},{passive:false});
-
 canvas.addEventListener('click',function(){
   if(state==='idle'){state='playing';}
   else if(state==='dead'){resetGame();}
@@ -197,6 +179,15 @@ document.addEventListener('keydown',function(e){
   else if(e.key==='ArrowDown'){e.preventDefault();switchLane(1);}
   else if(e.code==='Space'){
     e.preventDefault();
+    if(state==='idle'){state='playing';}
+    else if(state==='dead'){resetGame();}
+  }
+});
+
+window.addEventListener('message',function(e){
+  if(e.data==='up') switchLane(-1);
+  else if(e.data==='down') switchLane(1);
+  else if(e.data==='start'){
     if(state==='idle'){state='playing';}
     else if(state==='dead'){resetGame();}
   }
@@ -216,9 +207,9 @@ function gameLoop(){
 
   if(state==='idle'){
     drawHarvester(60,currentY,true);
-    ctx.fillStyle='rgba(0,0,0,0.4)';ctx.fillRect(W/2-125,H/2-18,250,36);
+    ctx.fillStyle='rgba(0,0,0,0.4)';ctx.fillRect(W/2-100,H/2-18,200,36);
     ctx.fillStyle=WHITE;ctx.font='11px monospace';ctx.textAlign='center';
-    ctx.fillText('FLECHAS ↑↓ o SWIPE para jugar',W/2,H/2+4);
+    ctx.fillText('TAP para empezar',W/2,H/2+4);
     requestAnimationFrame(gameLoop);return;
   }
 
