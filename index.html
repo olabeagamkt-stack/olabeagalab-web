@@ -10,26 +10,26 @@
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{background:#EE2934;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
     .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:3rem 2rem 2rem}
-    .logo-img{width:280px;max-width:80vw;margin-bottom:1.5rem;filter:brightness(0) invert(1)}
-    .message{font-size:22px;font-weight:500;color:white;letter-spacing:-.2px;margin-bottom:2rem;text-align:center}
+    .logo-img{width:280px;max-width:80vw;margin-bottom:1.5rem;filter:brightness(0) invert(1);pointer-events:none}
+    .message{font-size:22px;font-weight:500;color:white;letter-spacing:-.2px;margin-bottom:2rem;text-align:center;pointer-events:none}
     .game-section{display:flex;flex-direction:column;align-items:center;width:100%}
-    .score-wrap{display:flex;justify-content:space-between;width:600px;max-width:90vw;margin-bottom:6px;color:rgba(255,255,255,.8);font-size:12px;letter-spacing:.06em;font-family:monospace}
-    .hint{color:rgba(255,255,255,.55);font-size:11px;margin-top:8px;letter-spacing:.04em;text-align:center;font-family:monospace}
+    .score-wrap{display:flex;justify-content:space-between;width:600px;max-width:90vw;margin-bottom:6px;color:rgba(255,255,255,.8);font-size:12px;letter-spacing:.06em;font-family:monospace;pointer-events:none}
+    .tap-zone{width:600px;max-width:90vw;height:160px;position:relative;cursor:pointer}
+    .tap-zone canvas{position:absolute;top:0;left:0;width:100%;height:100%;image-rendering:pixelated;border-radius:4px;pointer-events:none}
+    .hint{color:rgba(255,255,255,.55);font-size:11px;margin-top:8px;letter-spacing:.04em;text-align:center;font-family:monospace;pointer-events:none}
     .dead-options{display:none;flex-direction:column;align-items:center;gap:10px;margin-top:14px}
     .dead-options.show{display:flex}
-    .dead-score{color:rgba(255,255,255,.7);font-size:12px;letter-spacing:.04em;font-family:monospace;text-align:center}
-    .btn-game{background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.3);border-radius:99px;padding:9px 22px;font-size:13px;color:white;cursor:pointer;font-family:monospace;letter-spacing:.04em}
+    .dead-score{color:rgba(255,255,255,.7);font-size:12px;letter-spacing:.04em;font-family:monospace;text-align:center;pointer-events:none}
+    .btn-game{background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.3);border-radius:99px;padding:9px 22px;font-size:13px;color:white;cursor:pointer;font-family:monospace;letter-spacing:.04em;pointer-events:auto}
     .btn-game:hover{background:rgba(255,255,255,.22)}
     .btn-row{display:flex;gap:10px}
-    .tap-zone{width:600px;max-width:90vw;height:160px;position:relative;cursor:pointer}
-    .tap-zone canvas{position:absolute;top:0;left:0;width:100%;height:100%;image-rendering:pixelated;border-radius:4px}
     .bottom-section{margin-top:3rem;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,.15);width:100%;max-width:600px}
-    .sub{font-size:16px;color:rgba(255,255,255,.75);margin-bottom:.4rem}
-    .mientras{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:1rem}
+    .sub{font-size:16px;color:rgba(255,255,255,.75);margin-bottom:.4rem;pointer-events:none}
+    .mientras{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:1rem;pointer-events:none}
     .contact-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:1.5rem}
-    .pill{background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.25);border-radius:99px;padding:9px 18px;font-size:13px;color:white;text-decoration:none}
+    .pill{background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.25);border-radius:99px;padding:9px 18px;font-size:13px;color:white;text-decoration:none;pointer-events:auto}
     .pill:hover{background:rgba(255,255,255,.22)}
-    .footer{font-size:11px;color:rgba(255,255,255,.3)}
+    .footer{font-size:11px;color:rgba(255,255,255,.3);pointer-events:none}
   </style>
 </head>
 <body>
@@ -74,7 +74,7 @@
     const RED='#EE2934',WHITE='#FFFFFF',YELLOW='#FFD700';
     const GROUND='#c45c1a',GROUNDTOP='#d4732a';
 
-    let state='idle',score=0,hi=0,frame=0,speed=5,spawnTimer=80;
+    let state='idle',score=0,hi=0,frame=0,speed=5,spawnTimer=200;
     const h={x:60,y:GY,vy:0,onGround:true,h:32};
     const obs=[];
     const clouds=[{x:80,y:14,w:50,s:.3},{x:300,y:8,w:42,s:.35},{x:500,y:16,w:38,s:.25}];
@@ -217,7 +217,7 @@
     }
 
     function resetGame(){
-      score=0;speed=5;frame=0;spawnTimer=80;
+      score=0;speed=5;frame=0;spawnTimer=200;
       obs.length=0;particles.length=0;
       h.y=GY;h.vy=0;h.onGround=true;
       state='playing';
@@ -280,74 +280,4 @@
         else if(r<0.55){type='wheat';w=16;hh=20;dangerous=false;bonus=3;}
         else if(r<0.7){type='sunflower';w=16;hh=22;dangerous=false;bonus=4;}
         else if(r<0.83){type='chicken';w=18;hh=22;dangerous=true;bonus=0;}
-        else if(r<0.93){type='stone';w=24;hh=20;dangerous=true;bonus=0;}
-        else{type='mole';w=24;hh=24;dangerous=true;bonus=0;}
-        obs.push({x:W+10,type,w,h:hh,dangerous,bonus,legf:false});
-        spawnTimer=50+Math.random()*60;
-      }
-
-      for(let i=obs.length-1;i>=0;i--){
-        obs[i].x-=speed;
-        if(obs[i].x<-60) obs.splice(i,1);
-      }
-
-      clouds.forEach(cl=>{cl.x-=cl.s;if(cl.x<-80)cl.x=W+20;});
-
-      for(let i=particles.length-1;i>=0;i--){
-        const p=particles[i];
-        p.x+=p.vx;p.y+=p.vy;p.vy+=0.3;p.life--;
-        if(p.life<=0) particles.splice(i,1);
-      }
-
-      checkCollect();
-
-      if(checkCollision()){
-        state='dead';
-        if(score>hi)hi=score;
-        document.getElementById('hi-display').textContent='RÉCORD: '+Math.floor(hi);
-        document.getElementById('dead-score-txt').textContent='COSECHA FINAL: '+Math.floor(score)+(score>=hi&&score>0?' · NUEVO RÉCORD!':'');
-        document.getElementById('dead-opts').classList.add('show');
-        document.getElementById('hint').style.display='none';
-        requestAnimationFrame(gameLoop);return;
-      }
-
-      drawScene();
-      obs.forEach(o=>{
-        if(o.type==='chicken') o.legf=Math.floor(frame/6)%2===0;
-        drawObstacle(o);
-      });
-
-      particles.forEach(p=>{
-        ctx.globalAlpha=p.life/20;
-        dp(p.x,p.y,4,4,p.color);
-      });
-      ctx.globalAlpha=1;
-
-      drawHarvester(h.x,GY-h.h+32,true);
-      document.getElementById('score-display').textContent='COSECHA: '+Math.floor(score);
-      requestAnimationFrame(gameLoop);
-    }
-
-    const tapZone=document.getElementById('tap-zone');
-    tapZone.addEventListener('click',jump);
-    tapZone.addEventListener('touchstart',function(e){
-      e.preventDefault();
-      jump();
-    },{passive:false});
-
-    document.addEventListener('keydown',function(e){
-      if(e.code==='Space'){
-        e.preventDefault();
-        jump();
-      }
-    });
-
-    document.getElementById('btn-retry').addEventListener('click',resetGame);
-    document.getElementById('btn-scroll').addEventListener('click',function(){
-      document.getElementById('bottom').scrollIntoView({behavior:'smooth'});
-    });
-
-    gameLoop();
-  </script>
-</body>
-</html>
+        else if(r<0.93
