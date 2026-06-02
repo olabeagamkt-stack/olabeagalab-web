@@ -8,13 +8,15 @@
   <meta name="description" content="Marketing con raíces, contenido con impacto.">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{overflow-x:hidden;background:#EE2934;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+    html,body{background:#EE2934;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
     .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:3rem 2rem 2rem}
     .logo-img{width:280px;max-width:80vw;margin-bottom:1.5rem;filter:brightness(0) invert(1)}
     .message{font-size:22px;font-weight:500;color:white;letter-spacing:-.2px;margin-bottom:2rem;text-align:center}
     .game-section{display:flex;flex-direction:column;align-items:center;width:100%}
     .score-wrap{display:flex;justify-content:space-between;width:600px;max-width:90vw;margin-bottom:6px;color:rgba(255,255,255,.8);font-size:12px;letter-spacing:.06em;font-family:monospace}
-    canvas{display:block;image-rendering:pixelated;border-radius:4px;width:600px;max-width:90vw;height:auto;cursor:pointer;touch-action:none}
+    .canvas-wrap{position:relative;width:600px;max-width:90vw}
+    canvas{display:block;image-rendering:pixelated;border-radius:4px;width:100%;height:auto}
+    #jump-btn{position:absolute;top:0;left:0;width:100%;height:100%;background:transparent;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
     .hint{color:rgba(255,255,255,.55);font-size:11px;margin-top:8px;letter-spacing:.04em;text-align:center;font-family:monospace}
     .dead-options{display:none;flex-direction:column;align-items:center;gap:10px;margin-top:14px}
     .dead-options.show{display:flex}
@@ -42,7 +44,10 @@
         <span id="score-display">COSECHA: 0</span>
         <span id="hi-display">RÉCORD: 0</span>
       </div>
-      <canvas id="c" width="600" height="160"></canvas>
+      <div class="canvas-wrap">
+        <canvas id="c" width="600" height="160"></canvas>
+        <button id="jump-btn" aria-label="Saltar"></button>
+      </div>
       <div class="hint" id="hint">ESPACIO o TAP para saltar</div>
       <div class="dead-options" id="dead-opts">
         <div class="dead-score" id="dead-score-txt"></div>
@@ -324,29 +329,21 @@
       requestAnimationFrame(gameLoop);
     }
 
-    window.addEventListener('keydown',e=>{
-      if(e.code==='Space'){e.preventDefault();e.stopPropagation();jump();}
-    },true);
-
-    window.addEventListener('touchstart',e=>{
-      if(e.target.closest('button')||e.target.closest('a')) return;
+    document.getElementById('jump-btn').addEventListener('click',jump);
+    document.getElementById('jump-btn').addEventListener('touchstart',function(e){
       e.preventDefault();
-      e.stopPropagation();
       jump();
-    },{passive:false,capture:true});
+    },{passive:false});
 
-    window.addEventListener('pointerdown',e=>{
-      if(e.target.closest('button')||e.target.closest('a')) return;
-      jump();
-    },{capture:true});
-
-    document.getElementById('btn-retry').addEventListener('click',e=>{
-      e.stopPropagation();
-      resetGame();
+    document.addEventListener('keydown',function(e){
+      if(e.code==='Space'){
+        e.preventDefault();
+        jump();
+      }
     });
 
-    document.getElementById('btn-scroll').addEventListener('click',e=>{
-      e.stopPropagation();
+    document.getElementById('btn-retry').addEventListener('click',resetGame);
+    document.getElementById('btn-scroll').addEventListener('click',function(){
       document.getElementById('bottom').scrollIntoView({behavior:'smooth'});
     });
 
