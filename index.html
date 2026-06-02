@@ -14,7 +14,7 @@
     .message{font-size:22px;font-weight:500;color:white;letter-spacing:-.2px;margin-bottom:2rem;text-align:center}
     .game-section{display:flex;flex-direction:column;align-items:center;width:100%}
     .score-wrap{display:flex;justify-content:space-between;width:600px;max-width:90vw;margin-bottom:6px;color:rgba(255,255,255,.8);font-size:12px;letter-spacing:.06em;font-family:monospace}
-    canvas{display:block;image-rendering:pixelated;border-radius:4px;width:600px;max-width:90vw;height:auto}
+    canvas{display:block;image-rendering:pixelated;border-radius:4px;width:600px;max-width:90vw;height:auto;cursor:pointer}
     .hint{color:rgba(255,255,255,.55);font-size:11px;margin-top:8px;letter-spacing:.04em;text-align:center;font-family:monospace}
     .dead-options{display:none;flex-direction:column;align-items:center;gap:10px;margin-top:14px}
     .dead-options.show{display:flex}
@@ -77,7 +77,7 @@
     const clouds=[{x:80,y:14,w:50,s:.3},{x:300,y:8,w:42,s:.35},{x:500,y:16,w:38,s:.25}];
     const particles=[];
 
-    function dp(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),w,h);}
+    function dp(x,y,w,hh,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),w,hh);}
 
     function drawHarvester(x,y,alive){
       const g=alive?null:'#999';
@@ -145,7 +145,7 @@
       dp(x+6,y+2,10,4,'#bbb');
     }
 
-    function drawMole(x,y,frame){
+    function drawMole(x,y){
       const bob=Math.floor(frame/8)%2===0?0:2;
       dp(x+4,y+10+bob,16,14,'#6B4C3B');
       dp(x+6,y+6+bob,12,8,'#8B6355');
@@ -197,17 +197,17 @@
       else if(o.type==='sunflower') drawSunflower(o.x,y);
       else if(o.type==='chicken') drawChicken(o.x,y,o.legf);
       else if(o.type==='stone') drawStone(o.x,y);
-      else if(o.type==='mole') drawMole(o.x,y,frame);
+      else if(o.type==='mole') drawMole(o.x,y);
     }
 
     function jump(){
+      if(state==='dead') return;
       if(state==='idle'){
         state='playing';
         document.getElementById('hint').style.opacity='0';
         return;
       }
-      if(state==='dead') return;
-      if(h.onGround&&state==='playing'){
+      if(h.onGround){
         h.vy=-12;
         h.onGround=false;
       }
@@ -247,7 +247,6 @@
     function gameLoop(){
       if(state==='idle'){
         drawScene();
-        obs.forEach(o=>drawObstacle(o));
         drawHarvester(h.x,GY-h.h+32,true);
         ctx.fillStyle='rgba(0,0,0,0.4)';ctx.fillRect(W/2-115,H/2-20,230,40);
         ctx.fillStyle=WHITE;ctx.font='11px monospace';ctx.textAlign='center';
@@ -325,8 +324,15 @@
       requestAnimationFrame(gameLoop);
     }
 
-    document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();jump();}});
-    canvas.addEventListener('pointerdown',e=>{e.preventDefault();jump();});
+    document.addEventListener('keydown',e=>{
+      if(e.code==='Space'){e.preventDefault();jump();}
+    });
+
+    document.addEventListener('pointerdown',e=>{
+      if(e.target.id==='btn-retry'||e.target.id==='btn-scroll') return;
+      jump();
+    });
+
     document.getElementById('btn-retry').addEventListener('click',resetGame);
     document.getElementById('btn-scroll').addEventListener('click',()=>{
       document.getElementById('bottom').scrollIntoView({behavior:'smooth'});
