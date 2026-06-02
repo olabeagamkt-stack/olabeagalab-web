@@ -45,8 +45,10 @@
         <span id="hi-display">RÉCORD: 0</span>
       </div>
       <div class="canvas-wrap">
-        <canvas id="c" width="600" height="160"></canvas>
-        <button id="jump-btn" aria-label="Saltar"></button>
+       <div style="position:relative;width:600px;max-width:90vw;">
+  <canvas id="c" width="600" height="160" style="display:block;width:100%;height:auto;image-rendering:pixelated;border-radius:4px;"></canvas>
+  <button id="jump-btn" aria-label="Saltar" style="position:absolute;top:0;left:0;width:100%;height:100%;background:transparent;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;"></button>
+</div>
       </div>
       <div class="hint" id="hint">ESPACIO o TAP para saltar</div>
       <div class="dead-options" id="dead-opts">
