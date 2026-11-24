@@ -160,7 +160,7 @@
           <div class="s" id="msg-sub"><i class="desk-only">↑↓ cambia de carril · coge la paja, esquiva el resto</i><i class="touch-only">Toca arriba o abajo · coge la paja</i></div>
           <div class="s" id="msg-prize">Pasa de <span class="meta"></span> y el café corre de nuestra cuenta</div>
           <div class="cta" id="msg-cta" hidden>
-            <a id="cta-mail" href="mailto:hola@olabeagalab.com">Escríbenos</a>
+            <a id="cta-mail" href="https://wa.me/34623639760?text=Hola%2C%20vengo%20de%20vuestra%20web.%20%C2%BFHablamos%20de%20mi%20negocio%3F" target="_blank" rel="noopener">Escríbenos</a>
             <a id="cta-wa" href="https://wa.me/" target="_blank" rel="noopener">Reta a alguien</a>
           </div>
           <div class="s again" id="msg-again" hidden><i class="desk-only">Espacio</i><i class="touch-only">Toca</i> para repetir</div>
@@ -172,6 +172,7 @@
       <div class="mono">Estamos cosechando.<br><span class="dim">Pronto aquí.</span></div>
       <div class="mono links">
         <a href="mailto:hola@olabeagalab.com">hola@olabeagalab.com</a><br>
+        <a href="https://wa.me/34623639760?text=Hola%2C%20vengo%20de%20vuestra%20web.%20%C2%BFHablamos%20de%20mi%20negocio%3F" target="_blank" rel="noopener">623 63 97 60</a><br>
         <a href="https://instagram.com/olabeaga__" target="_blank" rel="noopener">@olabeaga__</a>
         <div class="sub-links">
           <a href="#sobre-nosotros" id="open-about">Sobre nosotros</a><br>
@@ -190,6 +191,7 @@
       <p class="about-text">Lo&nbsp;<b>pensamos</b>, lo&nbsp;<b>grabamos</b> y&nbsp;lo&nbsp;dejamos <b>bonito</b>.<br>Desde Ólvega, a&nbsp;donde haga falta.</p>
       <div class="mono links">
         <a href="mailto:hola@olabeagalab.com">hola@olabeagalab.com</a><br>
+        <a href="https://wa.me/34623639760?text=Hola%2C%20vengo%20de%20vuestra%20web.%20%C2%BFHablamos%20de%20mi%20negocio%3F" target="_blank" rel="noopener">623 63 97 60</a><br>
         <a href="https://instagram.com/olabeaga__" target="_blank" rel="noopener">@olabeaga__</a>
       </div>
     </div>
@@ -373,10 +375,11 @@
     msgTitle.textContent='Has cosechado '+s+'.'+(won?' Café ganado.':(isRecord&&s>0?' Nuevo récord.':''));
     msgSub.textContent='¿Hablamos de lo tuyo?';
     msgPrize.hidden=true;msgCta.hidden=false;msgAgain.hidden=false;msg.classList.add('over');
+    // Escríbenos: WhatsApp del estudio con la puntuación ya escrita
     const body=wonEver
-      ?'Hola, he cosechado '+s+' en Rastrojo Runner (mi récord: '+rec+') y tengo un café ganado. Os cuento lo mío:\n\n'
-      :'Hola, he cosechado '+s+' en Rastrojo Runner. Os cuento lo mío:\n\n';
-    ctaMail.href='mailto:hola@olabeagalab.com?subject='+encodeURIComponent('Rastrojo Runner: '+s+' puntos')+'&body='+encodeURIComponent(body);
+      ?'Hola, he cosechado '+s+' en Rastrojo Runner (mi récord: '+rec+') y tengo un café ganado. ¿Hablamos de mi negocio?'
+      :'Hola, he cosechado '+s+' en Rastrojo Runner. ¿Hablamos de mi negocio?';
+    ctaMail.href='https://wa.me/34623639760?text='+encodeURIComponent(body);
     ctaWa.href='https://wa.me/?text='+encodeURIComponent('He cosechado '+s+' en Rastrojo Runner. ¿Me superas? https://olabeagalab.com');
     msg.classList.remove('hidden');
   }
