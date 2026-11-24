@@ -2,118 +2,565 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Olabeaga Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Olabeaga Lab · Contamos lo que haces</title>
+  <meta name="description" content="Estudio creativo de Ólvega. Contamos lo que haces con estrategia, audiovisual y diseño.">
+  <meta property="og:title" content="Olabeaga Lab">
+  <meta property="og:description" content="Contamos lo que haces. Estudio creativo de Ólvega.">
+  <meta property="og:url" content="https://olabeagalab.com">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://olabeagalab.com/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://olabeagalab.com/">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#E62E2B">
   <link rel="icon" type="image/png" href="favicon.png">
-  <meta name="description" content="Marketing con raíces, contenido con impacto.">
+  <link rel="preload" href="fonts/SchibstedGrotesk-Medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/GeistMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{background:#EE2934;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-    .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:3rem 2rem 2rem}
-    .logo-img{width:280px;max-width:80vw;margin-bottom:1.5rem;filter:brightness(0) invert(1);display:block}
-    .message{font-size:22px;font-weight:500;color:white;letter-spacing:-.2px;margin-bottom:2rem;text-align:center}
-    .game-section{display:flex;flex-direction:column;align-items:center;width:100%}
-    .pc-wrap{display:flex;flex-direction:column;align-items:center;width:100%}
-    .score-label{font-size:12px;color:rgba(255,255,255,.7);font-family:monospace;letter-spacing:.06em;margin-bottom:6px;text-align:center}
-    .pc-wrap iframe{display:block;width:600px;max-width:90vw;height:180px;border:none;border-radius:4px}
-    .pc-hint{color:rgba(255,255,255,.55);font-size:11px;margin-top:8px;letter-spacing:.04em;text-align:center;font-family:monospace}
-    .console-wrap{display:none;flex-direction:column;align-items:center}
-    .screen-wrap{background:#1a1a1a;border-radius:16px 16px 0 0;padding:12px 12px 0;width:320px;max-width:92vw}
-    .screen-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    .brand{color:#EE2934;font-size:10px;letter-spacing:.1em;font-family:monospace}
-    .led{width:6px;height:6px;border-radius:50%;background:#00ff00;box-shadow:0 0 4px #00ff00}
-    .screen-wrap iframe{display:block;width:100%;height:130px;border:none;border-radius:4px}
-    .console-body{background:#1a1a1a;border-radius:0 0 24px 24px;padding:14px 20px;width:320px;max-width:92vw;display:flex;justify-content:center;gap:16px}
-    .ctrl-btn{width:80px;height:56px;border-radius:8px;border:none;cursor:pointer;font-size:22px;color:white;font-family:monospace;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;justify-content:center}
-    .ctrl-btn:active{transform:translateY(3px)}
-    .ctrl-up{background:#c0392b;box-shadow:inset 0 -4px 0 #7b1a10}
-    .ctrl-up:active{box-shadow:inset 0 0px 0 #7b1a10}
-    .ctrl-down{background:#2471a3;box-shadow:inset 0 -4px 0 #154360}
-    .ctrl-down:active{box-shadow:inset 0 0px 0 #154360}
-    .console-hint{color:rgba(255,255,255,.3);font-size:9px;letter-spacing:.08em;font-family:monospace;text-align:center;margin-top:8px}
-    @media(max-width:640px){
-      .pc-wrap{display:none}
-      .console-wrap{display:flex}
+    @font-face{font-family:"Geist Mono";src:url("fonts/GeistMono-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+    @font-face{font-family:"Geist Mono";src:url("fonts/GeistMono-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+    @font-face{font-family:"Schibsted Grotesk";src:url("fonts/SchibstedGrotesk-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+    @font-face{font-family:"Schibsted Grotesk";src:url("fonts/SchibstedGrotesk-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+    :root{
+      --red:#E62E2B;
+      --sans:"Schibsted Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif;
+      --mono:"Geist Mono",ui-monospace,monospace;
+      --pad:clamp(18px,2.4vw,36px);
     }
-    .bottom-section{margin-top:3rem;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,.15);width:100%;max-width:600px}
-    .sub{font-size:16px;color:rgba(255,255,255,.75);margin-bottom:.4rem}
-    .mientras{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:1rem}
-    .contact-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:1.5rem}
-    .pill{background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.25);border-radius:99px;padding:9px 18px;font-size:13px;color:white;text-decoration:none}
-    .pill:hover{background:rgba(255,255,255,.22)}
-    .footer{font-size:11px;color:rgba(255,255,255,.3)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{background:var(--red);color:#fff;-webkit-font-smoothing:antialiased}
+    body{font-family:var(--sans)}
+    a{color:inherit;text-decoration:none}
+
+    .stage{
+      min-height:100vh;min-height:100svh;
+      display:grid;
+      grid-template-rows:auto 1fr auto auto;
+      padding:var(--pad) 0;
+    }
+    .row{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:0 var(--pad)}
+    .mono{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;line-height:1.6}
+    .dim{opacity:.85}
+
+    .logo{height:clamp(44px,5vw,76px);width:auto;display:block}
+
+    .hero{align-self:end;padding:0 var(--pad);margin-bottom:clamp(18px,2.6vw,40px)}
+    .hero{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem}
+    .services{list-style:none;text-align:right;font-size:12px;line-height:1.7;margin-top:calc(clamp(52px,min(11vw,19vh),190px)*.09 - 6px)}
+    .lockup{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem}
+    .logo-svg{height:clamp(58px,6.6vw,100px);width:auto;display:block;overflow:visible}
+    .wave-text{font-family:var(--mono);font-size:118px;letter-spacing:.08em;fill:#fff}
+    .about{position:fixed;inset:0;background:#fff;color:var(--red);display:grid;grid-template-rows:auto 1fr auto;padding:var(--pad) 0;transform:translateY(100%);visibility:hidden;transition:transform .55s cubic-bezier(.7,0,.2,1),visibility 0s .55s;z-index:10;overflow-y:auto}
+    .about-foot{align-self:end;align-items:flex-end;gap:2rem}
+    .about.open{transform:none;visibility:visible;transition:transform .55s cubic-bezier(.7,0,.2,1)}
+    .about button{background:none;border:0;color:inherit;cursor:pointer;padding:0}
+    a:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+    .about-text{padding:0;font-size:clamp(30px,5.2vw,84px);font-weight:500;letter-spacing:-.035em;line-height:1;max-width:18ch}
+    .about-text b{font-weight:500}
+    .about .foot a{border-color:rgba(230,46,43,.4)}
+    .clock{font-variant-numeric:tabular-nums}
+    .stage>.row.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:start}
+    .stage>.row.top>.desc{justify-self:end;text-align:right}
+    .void{display:none}
+    .about .row.top{display:flex;flex-direction:row;align-items:baseline}
+    .headline{
+      font-size:clamp(52px,min(11vw,19vh),190px);
+      font-weight:500;
+      letter-spacing:-.045em;
+      line-height:.88;
+    }
+
+    /* Juego */
+    .game{position:relative;height:clamp(170px,27vh,300px);cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+    .game canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+    .hud{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;padding:0 var(--pad);pointer-events:none}
+    .msg{position:absolute;left:0;right:0;top:24px;text-align:center;pointer-events:none;transition:opacity .2s}
+    .msg .box{display:inline-block;max-width:100%;background:var(--red);padding:4px 14px 6px}
+    /* Fin de partida: la caja se invierte (blanco y rojo), como el panel Sobre nosotros */
+    .msg.over .box{background:#fff;color:var(--red);padding:14px 20px 12px}
+    .msg.over .cta a{border-color:var(--red)}
+    .msg .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:.6em 1.4em;margin:10px 0 2px;pointer-events:auto}
+    .msg .cta[hidden],.msg [hidden]{display:none}
+    .msg .cta a{font-weight:500;font-size:12px;letter-spacing:.1em;border-bottom:1px solid #fff;padding-bottom:1px}
+    .msg .cta a:hover{opacity:.8}
+    .msg .again{margin-top:8px}
+    .msg i{font-style:normal}
+    .msg .t{font-weight:500;font-size:13px;letter-spacing:.12em}
+    .msg .s{margin-top:6px;opacity:.85}
+    .hidden{opacity:0}
+
+    .foot{align-items:flex-end;margin-top:clamp(14px,2vw,28px)}
+    .foot a{border-bottom:1px solid rgba(255,255,255,.4)}
+    .foot a:hover{border-color:#fff}
+    .links{text-align:right}
+    .sub-links{margin-top:.7em}
+
+    .touch-only{display:none}
+    @media (hover:none){.touch-only{display:inline}.desk-only{display:none}}
+
+    @media(max-width:640px){
+      .stage{display:flex;flex-direction:column;justify-content:space-between}
+      .stage>.hero{margin-bottom:0;align-self:stretch}
+      .about-foot{flex-direction:column!important;align-items:flex-start!important}
+      .about-foot .links{text-align:left}
+      .stage>.foot{margin-top:0}
+      .stage>.row.top{display:flex;flex-direction:column;align-items:center}
+      .stage>.row.top>.desc{display:none}
+      .lockup{align-items:center}
+      .lockup{position:relative;width:min(86vw,360px)}
+      .lockup .logo{width:100%;height:auto}
+      .void{display:block;position:absolute;font-size:11px;line-height:1.3}
+      .void-top{right:0;top:10%}
+      .void-bottom{left:0;bottom:10%}
+      .hero{flex-direction:column;align-items:flex-start;gap:0}
+      .services{display:flex;gap:.9em;text-align:left;margin-top:12px;padding-bottom:0}
+      .services li+li::before{content:"·";margin-right:.9em}
+      .logo-svg{height:78px}
+      .clock{display:none}
+      .msg{padding:0 var(--pad)}
+      .msg .s{font-size:10px;letter-spacing:.04em}
+      .foot{flex-direction:row;align-items:flex-end;gap:1rem}
+      .links{text-align:right}
+
+      .headline{font-size:clamp(52px,15vw,96px)}
+
+      .game{height:clamp(190px,31svh,260px)}
+    }
   </style>
 </head>
 <body>
-  <div class="page">
-    <img class="logo-img" src="Recurso 6-8 (1).png" alt="Olabeaga Lab">
-    <div class="message">Estamos cosechando.</div>
-
-    <div class="game-section">
-      <div class="pc-wrap">
-        <div class="score-label">RASTROJO RUNNER</div>
-        <iframe id="game-pc" src="game.html" scrolling="no"></iframe>
-        <div class="pc-hint">FLECHAS ↑↓ para cambiar de carril</div>
+  <main class="stage">
+    <header class="row top">
+      <div class="lockup">
+        <img class="logo" src="logo.png" alt="Olabeaga Lab">
+        <p class="mono void void-top" aria-hidden="true">Estudio creativo</p>
+        <p class="mono void void-bottom" aria-hidden="true" id="clock-m">Ólvega · 00:00:00</p>
       </div>
+      <div class="mono clock" id="clock" aria-hidden="true">Ólvega · 00:00:00</div>
+      <p class="mono desc">Estudio creativo</p>
+    </header>
 
-      <div class="console-wrap">
-        <div class="screen-wrap">
-          <div class="screen-top">
-            <span class="brand">OLABEAGA LAB</span>
-            <div class="led"></div>
+    <div class="hero">
+      <h1 class="headline">Contamos<br>lo que haces.</h1>
+      <ul class="mono services"><li>Estrategia</li><li>Audiovisual</li><li>Diseño</li></ul>
+    </div>
+
+    <section class="game" id="game" aria-label="Rastrojo Runner, minijuego">
+      <canvas id="c"></canvas>
+      <div class="hud mono">
+        <span>Rastrojo Runner</span>
+        <span id="hud-score"></span>
+      </div>
+      <div class="msg mono" id="msg">
+        <div class="box">
+          <div class="t" id="msg-title"><i class="desk-only">Espacio para cosechar</i><i class="touch-only">Toca para cosechar</i></div>
+          <div class="s" id="msg-sub"><i class="desk-only">↑↓ cambia de carril · coge la paja, esquiva el resto</i><i class="touch-only">Toca arriba o abajo · coge la paja</i></div>
+          <div class="s" id="msg-prize">Pasa de <span class="meta"></span> y el café corre de nuestra cuenta</div>
+          <div class="cta" id="msg-cta" hidden>
+            <a id="cta-mail" href="mailto:hola@olabeagalab.com">Escríbenos</a>
+            <a id="cta-wa" href="https://wa.me/" target="_blank" rel="noopener">Reta a alguien</a>
           </div>
-          <iframe id="game-mobile" src="game.html" scrolling="no"></iframe>
+          <div class="s again" id="msg-again" hidden><i class="desk-only">Espacio</i><i class="touch-only">Toca</i> para repetir</div>
         </div>
-        <div class="console-body">
-          <button class="ctrl-btn ctrl-up" id="btn-up">▲</button>
-          <button class="ctrl-btn ctrl-down" id="btn-down">▼</button>
+      </div>
+    </section>
+
+    <footer class="row foot">
+      <div class="mono">Estamos cosechando.<br><span class="dim">Pronto aquí.</span></div>
+      <div class="mono links">
+        <a href="mailto:hola@olabeagalab.com">hola@olabeagalab.com</a><br>
+        <a href="https://instagram.com/olabeaga__" target="_blank" rel="noopener">@olabeaga__</a>
+        <div class="sub-links">
+          <a href="#sobre-nosotros" id="open-about">Sobre nosotros</a><br>
+          <a href="aviso-legal.html" class="legal">Aviso legal</a>
         </div>
-        <div class="console-hint">RASTROJO RUNNER · TAP en pantalla para empezar</div>
+      </div>
+    </footer>
+  </main>
+
+  <section class="about" id="sobre-nosotros" role="dialog" aria-modal="true" aria-labelledby="about-title" inert>
+    <div class="row top">
+      <h2 class="mono" id="about-title" style="font-weight:400">Sobre nosotros</h2>
+      <button type="button" class="mono" id="close-about">Cerrar ✕</button>
+    </div>
+    <div class="row foot about-foot">
+      <p class="about-text">Lo&nbsp;<b>pensamos</b>, lo&nbsp;<b>grabamos</b> y&nbsp;lo&nbsp;dejamos <b>bonito</b>.<br>Desde Ólvega, a&nbsp;donde haga falta.</p>
+      <div class="mono links">
+        <a href="mailto:hola@olabeagalab.com">hola@olabeagalab.com</a><br>
+        <a href="https://instagram.com/olabeaga__" target="_blank" rel="noopener">@olabeaga__</a>
       </div>
     </div>
+  </section>
 
-    <div class="bottom-section" id="bottom">
-      <div class="sub">Pronto aquí.</div>
-      <div class="mientras">Mientras tanto, encuéntranos en:</div>
-      <div class="contact-row">
-        <a class="pill" href="mailto:hola@olabeagalab.com">hola@olabeagalab.com</a>
-        <a class="pill" href="https://instagram.com/olabeaga__" target="_blank">@olabeaga__</a>
-      </div>
-      <div class="footer">© 2026 Olabeaga Lab</div>
-    </div>
-  </div>
+<script>
+(()=>{
+  // ---------- Sprites (1 bit: # blanco, o rojo, . vacío) ----------
+  const S={
+    combine:[
+      "...................########.......",
+      "..###############..#......#.......",
+      "..#.............#..#......#.......",
+      "..#...###########..#......#.......",
+      "......###########..#......#.......",
+      "......###########..#......#.......",
+      "...########################.......",
+      "...########################.......",
+      "...###########....#########.......",
+      "...#########..##.#..#####.........",
+      "...########..######..####.........",
+      "...########.########.####.........",
+      "...#....##..##....###.###.........",
+      ".....##....###.##.###.###.........",
+      "....####...###.##.##...###########",
+      "...##..##...##....###..###########",
+      "...##..##...########....#.#.#.#.#.",
+      "....####.....######...............",
+      ".....##.......##.#................",
+    ],
+    combine2:[
+      "...................########.......",
+      "..###############..#......#.......",
+      "..#.............#..#......#.......",
+      "..#...###########..#......#.......",
+      "......###########..#......#.......",
+      "......###########..#......#.......",
+      "...########################.......",
+      "...########################.......",
+      "...###########....#########.......",
+      "...#########..#.##..#####.........",
+      "...########..######..####.........",
+      "...########.########.####.........",
+      "...#....##.###....##..###.........",
+      ".....##....###.##.###.###.........",
+      "....####....##.##.###..###########",
+      "...##..##..###....##...###########",
+      "...##..##...########....#.#.#.#.#.",
+      "....####.....######...............",
+      ".....##.......#.##................",
+    ],
+    bale:[
+      ".##########.",
+      "#..#...#...#",
+      "#..#...#...#",
+      "#..#...#...#",
+      "#..#...#...#",
+      "#..#...#...#",
+      ".##########.",
+    ],
+    wheat:[
+      ".#.#.#.",
+      "#.#.#.#",
+      ".#.#.#.",
+      "#.###.#",
+      "..###..",
+      "...#...",
+      "..###..",
+      "...#...",
+      "...#...",
+      "..#.#..",
+      ".#...#.",
+    ],
+    chicken:[
+      ".#.#........",
+      ".###....##..",
+      "##o#...#..#.",
+      ".###..#.##..",
+      "..##.####...",
+      "..########..",
+      "..#######...",
+      "...#####....",
+      "....#.#.....",
+      "...##.##....",
+    ],
+    chicken2:[
+      ".#.#........",
+      ".###....##..",
+      "##o#...#..#.",
+      ".###..#.##..",
+      "..##.####...",
+      "..########..",
+      "..#######...",
+      "...#####....",
+      "...#...#....",
+      "..##..##....",
+    ],
+    stone:[
+      "...####...",
+      "..######..",
+      ".###o####.",
+      "##########",
+      "##########",
+    ],
+  };
+  const TYPES={
+    bale:{s:'bale',good:true,bonus:5},
+    wheat:{s:'wheat',good:true,bonus:3},
+    chicken:{s:'chicken',good:false},
+    stone:{s:'stone',good:false},
+  };
 
-  <script>
-    function sendToGame(cmd){
-      ['game-pc','game-mobile'].forEach(id=>{
-        const f=document.getElementById(id);
-        if(f) f.contentWindow.postMessage(cmd,'*');
-      });
+  // ---------- Setup ----------
+  const wrap=document.getElementById('game');
+  const cv=document.getElementById('c');
+  const ctx=cv.getContext('2d');
+  const hud=document.getElementById('hud-score');
+  const msg=document.getElementById('msg');
+  const msgTitle=document.getElementById('msg-title');
+  const msgSub=document.getElementById('msg-sub');
+  const msgPrize=document.getElementById('msg-prize');
+  const msgCta=document.getElementById('msg-cta');
+  const msgAgain=document.getElementById('msg-again');
+  const ctaMail=document.getElementById('cta-mail');
+  const ctaWa=document.getElementById('cta-wa');
+  // Puntos para ganar el café. Cambiar aquí si se quiere otra cifra.
+  const META=300;
+  document.querySelectorAll('.meta').forEach(el=>el.textContent=META);
+  let cafe=false;
+  const isTouch=matchMedia('(hover:none)').matches;
+  const RED=getComputedStyle(document.documentElement).getPropertyValue('--red').trim()||'#E62E2B';
+
+  let U=4,W=0,H=0,P=4,dpr=1,lanesY=[0,0],padX=24;
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=wrap.clientWidth;H=wrap.clientHeight;
+    cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.imageSmoothingEnabled=false;
+    // U: unidad de velocidad (no cambia el ritmo del juego). P: tamaño del píxel de los dibujos,
+    // calculado para que la cosechadora quepa holgada entre los dos carriles.
+    U=Math.max(4,Math.floor(H/52));
+    P=Math.max(3,Math.floor(H*.48*.6/S.combine.length));
+    // El carril de arriba nunca sube tanto como para que la cosechadora pise el marcador
+    lanesY=[Math.round(Math.max(H*.44,30+S.combine.length*P)),Math.round(H*.92)];
+    padX=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pad'))||24;
+  }
+  addEventListener('resize',resize);resize();
+
+  function sprite(rows,x,yBase){
+    const h=rows.length,y0=Math.round(yBase-h*P),x0=Math.round(x);
+    for(let r=0;r<h;r++){
+      const row=rows[r];
+      for(let c=0;c<row.length;c++){
+        const ch=row[c];
+        if(ch==='.')continue;
+        ctx.fillStyle=ch==='#'?'#fff':RED;
+        ctx.fillRect(x0+c*P,y0+r*P,P,P);
+      }
+    }
+  }
+  const sw=k=>S[k][0].length*P, sh=k=>S[k].length*P;
+
+  // ---------- Estado ----------
+  let paused=false;
+  let rec=0;try{rec=+localStorage.getItem('rr-record')||0}catch(e){}
+  let state='idle',score=0,speed=0,t=0,lane=1,py=0,spawnIn=1,shake=0,deadAt=0,scroll=0;
+  const obs=[],parts=[],pops=[];
+
+  function reset(){
+    obs.length=parts.length=pops.length=0;
+    score=0;t=0;lane=1;py=lanesY[1];spawnIn=.8;shake=0;cafe=false;
+    state='play';msg.classList.add('hidden');
+  }
+  function die(){
+    state='dead';deadAt=performance.now();shake=.35;
+    const s=Math.floor(score);
+    const isRecord=s>rec;
+    if(isRecord){rec=s;try{localStorage.setItem('rr-record',rec)}catch(e){}}
+    const won=s>=META, wonEver=rec>=META;
+    msgTitle.textContent='Has cosechado '+s+'.'+(won?' Café ganado.':(isRecord&&s>0?' Nuevo récord.':''));
+    msgSub.textContent='¿Hablamos de lo tuyo?';
+    msgPrize.hidden=true;msgCta.hidden=false;msgAgain.hidden=false;msg.classList.add('over');
+    const body=wonEver
+      ?'Hola, he cosechado '+s+' en Rastrojo Runner (mi récord: '+rec+') y tengo un café ganado. Os cuento lo mío:\n\n'
+      :'Hola, he cosechado '+s+' en Rastrojo Runner. Os cuento lo mío:\n\n';
+    ctaMail.href='mailto:hola@olabeagalab.com?subject='+encodeURIComponent('Rastrojo Runner: '+s+' puntos')+'&body='+encodeURIComponent(body);
+    ctaWa.href='https://wa.me/?text='+encodeURIComponent('He cosechado '+s+' en Rastrojo Runner. ¿Me superas? https://olabeagalab.com');
+    msg.classList.remove('hidden');
+  }
+  function action(dir){
+    if(state==='idle'){reset();return;}
+    if(state==='dead'){if(performance.now()-deadAt>450)reset();return;}
+    if(dir) lane=Math.max(0,Math.min(1,lane+dir));
+  }
+
+  // ---------- Controles ----------
+  // El juego solo escucha el teclado si está a la vista y el foco no está en un enlace o botón
+  let gameVisible=true;
+  new IntersectionObserver(([en])=>{gameVisible=en.isIntersecting},{threshold:.4}).observe(wrap);
+  addEventListener('keydown',e=>{
+    if(paused||!gameVisible||e.metaKey||e.ctrlKey||e.altKey)return;
+    if(e.target.closest&&e.target.closest('a,button,input,textarea,select'))return;
+    const k=e.key;
+    if(k==='ArrowUp'||k==='w'||k==='W'){e.preventDefault();action(state==='play'?-1:0);}
+    else if(k==='ArrowDown'||k==='s'||k==='S'){e.preventDefault();action(state==='play'?1:0);}
+    else if(k===' '||k==='Enter'){e.preventDefault();action(0);}
+  });
+  wrap.addEventListener('pointerdown',e=>{
+    if(e.target.closest&&e.target.closest('a'))return;
+    if(state!=='play'){action(0);return;}
+    const r=wrap.getBoundingClientRect();
+    action(e.clientY-r.top<(lanesY[0]+lanesY[1])/2-sh('combine')/2?-1:1);
+  });
+  // Deslizar en cualquier parte de la página (móvil)
+  let sy=null;
+  addEventListener('touchstart',e=>{sy=e.touches[0].clientY},{passive:true});
+  addEventListener('touchend',e=>{
+    if(sy===null||state!=='play')return;
+    const dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dy)>30 && !wrap.contains(e.target)) action(dy<0?-1:1);
+    sy=null;
+  },{passive:true});
+
+  // ---------- Bucle ----------
+  let last=performance.now();
+  function loop(now){
+    const dt=Math.min(.05,(now-last)/1000);last=now;
+    update(dt);draw();
+    requestAnimationFrame(loop);
+  }
+
+  function spawn(){
+    const goodKeys=['bale','bale','wheat'],badKeys=['chicken','chicken','stone'];
+    const pick=a=>a[Math.floor(Math.random()*a.length)];
+    const l=Math.random()<.5?0:1;
+    const double=t>8&&Math.random()<Math.min(.45,.12+t/120);
+    if(double){
+      // Nunca bloquea los dos carriles: uno malo y uno bueno
+      obs.push({k:pick(badKeys),lane:l,x:W+P*4});
+      obs.push({k:pick(goodKeys),lane:1-l,x:W+P*4+Math.random()*P*10});
+    }else{
+      obs.push({k:Math.random()<.45?pick(goodKeys):pick(badKeys),lane:l,x:W+P*4});
+    }
+  }
+
+  function update(dt){
+    if(paused)return;
+    // En pantallas estrechas el obstáculo recorre menos distancia: se baja la velocidad para dar el mismo tiempo de reacción
+    const fit=Math.min(1,Math.max(.6,W/900));
+    const base=U*fit*(state==='play'?42+Math.min(t*1.6,70):10);
+    speed=base;
+    scroll=(scroll+speed*dt)%(P*12);
+    py+= (lanesY[lane]-py)*Math.min(1,dt*18);
+    if(shake>0)shake-=dt;
+
+    for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=P*120*dt;p.l-=dt;if(p.l<=0)parts.splice(i,1);}
+    for(let i=pops.length-1;i>=0;i--){const p=pops[i];if(!p.big)p.y-=P*10*dt;p.l-=dt;if(p.l<=0)pops.splice(i,1);}
+
+    if(state!=='play')return;
+    t+=dt;score+=dt*6;
+    if(!cafe&&score>=META){cafe=true;pops.push({x:W/2,y:lanesY[0]-sh('combine')/2,txt:'Café ganado. Sigue.',l:1.8,big:true});}
+
+    spawnIn-=dt;
+    if(spawnIn<=0){
+      spawn();
+      const gap=Math.max(.55,1.25-t/90);
+      spawnIn=gap+Math.random()*gap*.8;
     }
 
-    document.getElementById('btn-up').addEventListener('click',function(e){
-      e.preventDefault();
-      sendToGame('up');
-    });
-    document.getElementById('btn-down').addEventListener('click',function(e){
-      e.preventDefault();
-      sendToGame('down');
+    const px=Math.max(padX,W*.08), pw=sw('combine');
+    for(let i=obs.length-1;i>=0;i--){
+      const o=obs[i];o.x-=speed*dt;
+      if(o.x<-P*20){obs.splice(i,1);continue;}
+      if(o.lane!==lane)continue;
+      const T=TYPES[o.k], ow=sw(T.s);
+      // Caja real con un píxel de margen para que sea justo
+      if(o.x+P<px+pw-P && o.x+ow-P>px+P*3 && Math.abs(py-lanesY[lane])<P*3){
+        if(T.good){
+          score+=T.bonus;obs.splice(i,1);
+          for(let j=0;j<8;j++)parts.push({x:o.x+ow/2,y:lanesY[o.lane]-sh(T.s)/2,vx:(Math.random()-.3)*P*60,vy:-Math.random()*P*50,l:.5});
+          pops.push({x:o.x+ow/2,y:lanesY[o.lane]-sh(T.s)-P*2,txt:'+'+T.bonus,l:.7});
+        }else{die();break;}
+      }
+    }
+  }
+
+  function draw(){
+    ctx.save();
+    ctx.clearRect(0,0,W,H);
+    if(shake>0)ctx.translate((Math.random()-.5)*P*2,(Math.random()-.5)*P*2);
+
+    // Carriles con rastrojo
+    lanesY.forEach(y=>{
+      ctx.fillStyle='rgba(255,255,255,.9)';
+      ctx.fillRect(0,y,W,Math.max(1,P/2));
+      ctx.fillStyle='rgba(255,255,255,.45)';
+      for(let x=-scroll;x<W;x+=P*12){
+        ctx.fillRect(Math.round(x),y-P,Math.max(1,P/2),P);
+        ctx.fillRect(Math.round(x+P*5),y-P*1.5,Math.max(1,P/2),P*1.5);
+      }
     });
 
-    document.getElementById('btn-up').addEventListener('touchstart',function(e){
-      e.preventDefault();
-      sendToGame('up');
-    },{passive:false});
-
-    document.getElementById('btn-down').addEventListener('touchstart',function(e){
-      e.preventDefault();
-      sendToGame('down');
-    },{passive:false});
-
-    document.addEventListener('keydown',function(e){
-      if(e.key==='ArrowUp'){e.preventDefault();sendToGame('up');}
-      else if(e.key==='ArrowDown'){e.preventDefault();sendToGame('down');}
+    obs.forEach(o=>{
+      let k=TYPES[o.k].s;
+      if(k==='chicken'&&Math.floor(t*8)%2)k='chicken2';
+      const bob=TYPES[o.k].good?Math.round(Math.sin(t*6+o.x*.02))*P/2:0;
+      sprite(S[k],o.x,lanesY[o.lane]+bob);
     });
-  </script>
+
+    const px=Math.max(padX,W*.08);
+    const dead=state==='dead';
+    if(!(dead&&Math.floor((performance.now()-deadAt)/120)%2&&performance.now()-deadAt<700)){
+      // Paja saliendo por detrás
+      if(!dead){
+        ctx.fillStyle='rgba(255,255,255,.6)';
+        for(let i=0;i<3;i++){
+          const off=((scroll/P+i*4)%12);
+          ctx.fillRect(px+2*P-off*P,py-sh('combine')+P*(1+((i*3+Math.floor(off))%3)),P,P);
+        }
+      }
+      sprite(S[Math.floor(scroll/(P*3))%2&&!dead?'combine2':'combine'],px,py);
+    }
+
+    ctx.fillStyle='#fff';
+    parts.forEach(p=>{ctx.globalAlpha=Math.max(0,p.l/.5);ctx.fillRect(p.x,p.y,P,P)});
+    ctx.globalAlpha=1;
+    ctx.font='500 '+Math.max(11,P*3)+'px "Geist Mono",monospace';ctx.textAlign='center';
+    pops.forEach(p=>{ctx.globalAlpha=Math.min(1,Math.max(0,p.l/.7));ctx.fillText(p.big?p.txt.toUpperCase():p.txt,p.x,p.y)});
+    ctx.globalAlpha=1;
+    ctx.restore();
+
+    const s=String(Math.floor(score)).padStart(4,'0');
+    const r4=String(rec).padStart(4,'0');
+    hud.textContent=state==='idle'?'Récord '+r4
+      :(state==='play'&&score<META?s+' / '+String(META).padStart(4,'0'):s+' · Récord '+r4);
+  }
+
+  // Panel Sobre nosotros
+  const about=document.getElementById('sobre-nosotros');
+  const stage=document.querySelector('.stage');
+  const opener=document.getElementById('open-about');
+  const closer=document.getElementById('close-about');
+  const isOpen=()=>about.classList.contains('open');
+  function openAbout(e){
+    if(e)e.preventDefault();
+    about.inert=false;stage.inert=true;
+    about.classList.add('open');paused=true;
+    closer.focus({preventScroll:true});
+    if(location.hash!=='#sobre-nosotros')history.replaceState(null,'','#sobre-nosotros');
+  }
+  function closeAbout(){
+    if(!isOpen())return;
+    about.classList.remove('open');about.inert=true;stage.inert=false;paused=false;
+    history.replaceState(null,'',location.pathname+location.search);
+    opener.focus({preventScroll:true});
+  }
+  opener.addEventListener('click',openAbout);
+  closer.addEventListener('click',closeAbout);
+  addEventListener('keydown',e=>{if(e.key==='Escape')closeAbout();});
+  if(location.hash==='#sobre-nosotros')openAbout();
+  addEventListener('hashchange',()=>{if(location.hash==='#sobre-nosotros')openAbout();});
+
+  const clock=document.getElementById('clock');
+  const clockM=document.getElementById('clock-m');
+  const tick=()=>{try{const t='Ólvega · '+new Date().toLocaleTimeString('es-ES',{timeZone:'Europe/Madrid',hour12:false});clock.textContent=t;clockM.textContent=t}catch(e){}};
+  tick();setInterval(tick,1000);
+
+  py=lanesY[1];
+  requestAnimationFrame(loop);
+})();
+</script>
 </body>
 </html>
