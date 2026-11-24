@@ -2,7 +2,7 @@
   "redirects": [
     { "source": "/album",   "destination": "https://wa.me/34623639760?text=Hola%2C%20me%20falta%20el%20cromo%2000%20del%20%C3%A1lbum%20de%20la%20SD%20%C3%93lvega.%20%C2%BFHablamos%20de%20mi%20negocio%3F", "permanent": false },
     { "source": "/rollup",  "destination": "https://wa.me/34623639760?text=Hola%2C%20os%20he%20conocido%20en%20vuestro%20stand.%20%C2%BFHablamos%20de%20mi%20negocio%3F", "permanent": false },
-    { "source": "/flyer",   "destination": "https://wa.me/34623639760?text=Hola%2C%20quiero%20la%20revisi%C3%B3n%20gratis%20de%2030%20minutos%20de%20mi%20comunicaci%C3%B3n.", "permanent": false },
+    { "source": "/flyer",   "destination": "https://wa.me/34623639760?text=Hola%2C%20me%20interesa%20la%20revisi%C3%B3n%20gratis%20de%20mi%20comunicaci%C3%B3n.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%3F", "permanent": false },
     { "source": "/tarjeta", "destination": "https://wa.me/34623639760?text=Hola%2C%20tengo%20vuestra%20tarjeta.%20%C2%BFHablamos%3F", "permanent": false },
     { "source": "/alvaro",    "destination": "https://wa.me/34623639760?text=Hola%20%C3%81lvaro%2C%20tengo%20tu%20tarjeta.%20%C2%BFHablamos%3F", "permanent": false },
     { "source": "/alejandro", "destination": "https://wa.me/34623639760?text=Hola%20Alejandro%2C%20tengo%20tu%20tarjeta.%20%C2%BFHablamos%3F", "permanent": false }
